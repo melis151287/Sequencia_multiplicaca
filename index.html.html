@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Desafio 2 – A Missão do Castelo</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f2f2f2;
+      padding: 20px;
+    }
+    .cenario {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .desafio {
+      background-color: #fff;
+      border-radius: 12px;
+      box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+    .desafio img {
+      width: 100%;
+      max-width: 500px;
+      border-radius: 12px;
+    }
+    .resultado {
+      margin-top: 10px;
+      font-weight: bold;
+    }
+    .recompensa {
+      display: none;
+      margin-top: 10px;
+    }
+    .botao {
+      margin-top: 10px;
+    }
+    #final {
+      display: none;
+      text-align: center;
+      margin-top: 40px;
+    }
+    #final img {
+      width: 100%;
+      max-width: 500px;
+      border-radius: 12px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Vamos juntos iniciar mais essa missão!</h1>
+  <p>Marina, Brisa e Anna  estão prestes a enfrentar grandes desafios no Castelo de Greicicol! Ajude-as a desvendar as sequências e conquistar recompensas!</p>
+
+  <div class="cenario">
+    <img src="portadocastelocommultiplicaçoes.png" alt="Porta do Castelo">
+  </div>
+
+  <div id="container"></div>
+
+  <div id="final">
+    <div class="cenario">
+      <img src="rumoagatha.png" alt="Cena Final">
+    </div>
+    <h2>Parabéns! Você libertou Agnes com sabedoria. Agora, prepare-se para a missão que levará até Agatha!</h2>
+  </div>
+
+  <script>
+    const desafios = [
+      {
+        titulo: "Desafio 01",
+        descricao: "Marina deseja abrir a porta do castelo de Greicicol e precisa descobrir a sequência para ganhar a chave. 3, 6, 12, ?",
+        resposta: "24",
+        recompensa: "chaveprateada.png"
+      },
+      {
+        titulo: "Desafio 02",
+        descricao: "Após passar pela porta do castelo, as meninas se depararam com um abismo. Para erguer uma passarela mágica, descubra o próximo número: 2, 4, 8, ?",
+        resposta: "16",
+        recompensa: "corda.png"
+      },
+      {
+        titulo: "Desafio 03",
+        descricao: "Para achar um mapa misterioso Brisa precisa resolver  a sequência: 5, 10, 15, ?",
+        resposta: "20",
+        recompensa: "mapa.jpg"
+      },
+      {
+        titulo: "Desafio 04",
+        descricao: "Anna precisa destrancar um baú e ter acesso a algumas ferramentas ajude com a sequência correta: 1, 3, 6, 10, ?",
+        resposta: "15",
+        recompensa: "bau.avif"
+      },
+      {
+        titulo: "Desafio 05",
+        descricao: "Marina avistou uma  possivel passagem, uma ponte mágica, com números que crescem,ela precisa de ajuda para chegar até ela,qual será o próximo núemro? 7, 14, 28, ?",
+        resposta: "56",
+        recompensa: "pontemagica.avif"
+      },
+      {
+        titulo: "Desafio 06",
+        descricao: "Brisa encontrou um armário cheio de porções,para ganhar uma ela precisa resolver o enigma: 4, 8, 16, ?",
+        resposta: "32",
+        recompensa: "porcao.png"
+      },
+      {
+        titulo: "Desafio 07",
+        descricao: "Brisa achou medalhas numeradas que podem ajudar a salvar Agnes,mas primeiro precisa dizer o próximo número: 1, 4, 9, 16, ?",
+        resposta: "25",
+        recompensa: "medalha.jpg"
+      },
+      {
+        titulo: "Desafio 08",
+        descricao: "Anna viu uma fechadura dourada,mas para conseguir abrir ela precisa de uma chave ,que só aparecerá se resolver a sequência: 16, ,32, 64, ?",
+        resposta: "128",
+        recompensa: "chaverosa.avif"
+      },
+      {
+        titulo: "Desafio 09",
+        descricao: "Em uma parede flutuando, como uma cortina, apareceu a sequência com os números: 10, 100, 1000, ? Para onde será que levará as meninas?",
+        resposta: "10000",
+        recompensa: "portalmagico.jpg"
+      },
+      {
+        titulo: "Desafio 10",
+        descricao: "Após passar pelo portal,mais um desáfio estava pela frente e Marina logo pensou: o dobro de 5 mais 2 é 12, o dobro de 6 mais 2 é 14. E o dobro de 7 mais 2 é...?",
+        resposta: "16",
+        recompensa: "escudo.png"
+      },
+      {
+        titulo: "Desafio Extra",
+        descricao: "Para libertar Agnes, descubra o quadrado perfeito que vem após 36:",
+        resposta: "49",
+        recompensa: "meninas4.png"
+      }
+    ];
+
+    const container = document.getElementById("container");
+    let respostasCertas = new Array(desafios.length).fill(false);
+
+    desafios.forEach((desafio, index) => {
+      const div = document.createElement("div");
+      div.className = "desafio";
+
+      const titulo = document.createElement("h2");
+      titulo.textContent = desafio.titulo;
+
+      const descricao = document.createElement("p");
+      descricao.textContent = desafio.descricao;
+
+      const input = document.createElement("input");
+      input.type = "text";
+      input.placeholder = "Digite sua resposta";
+
+      const botao = document.createElement("button");
+      botao.textContent = "Verificar";
+      botao.className = "botao";
+
+      const resultado = document.createElement("div");
+      resultado.className = "resultado";
+
+      const recompensa = document.createElement("img");
+      recompensa.src = desafio.recompensa;
+      recompensa.className = "recompensa";
+      recompensa.alt = "Recompensa";
+      recompensa.style.maxWidth = "250px";
+
+      botao.onclick = () => {
+        if (input.value.trim() === desafio.resposta) {
+          resultado.textContent = "Resposta correta! Você conquistou a recompensa!";
+          recompensa.style.display = "block";
+          respostasCertas[index] = true;
+        } else {
+          resultado.textContent = "Tente novamente!";
+          recompensa.style.display = "none";
+          respostasCertas[index] = false;
+        }
+
+        if (respostasCertas.every(Boolean)) {
+          document.getElementById("final").style.display = "block";
+        }
+      };
+
+      div.appendChild(titulo);
+      div.appendChild(descricao);
+      div.appendChild(input);
+      div.appendChild(botao);
+      div.appendChild(resultado);
+      div.appendChild(recompensa);
+
+      container.appendChild(div);
+    });
+  </script>
+</body>
+</html>
